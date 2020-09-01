@@ -1,3 +1,11 @@
+#!/usr/bin/python
+# -*- coding:UTF-8 -*-
+'''
+Author: zhangpeiyu
+Date: 2020-08-31 23:44:11
+LastEditTime: 2020-09-02 00:32:54
+Description: 我不是诗人，所以，只能够把爱你写进程序，当作不可解的密码，作为我一个人知道的秘密。
+'''
 from  docx import  Document
 from  docx.shared import  Pt
 from  docx.oxml.ns import  qn
@@ -33,6 +41,7 @@ run = paragraph.add_run(u'粗体').bold = True
 
 #增加表格
 table = document.add_table(rows=3,cols=3)
+print(dir(table))
 hdr_cells=table.rows[0].cells
 hdr_cells[0].text="第一列"
 hdr_cells[1].text="第二列"
