@@ -3,7 +3,7 @@
 '''
 Author: zhangpeiyu
 Date: 2020-09-01 21:51:45
-LastEditTime: 2020-09-03 00:37:21
+LastEditTime: 2020-09-03 21:56:18
 Description: 我不是诗人，所以，只能够把爱你写进程序，当作不可解的密码，作为我一个人知道的秘密。
 '''
 import file_to_json
@@ -178,15 +178,16 @@ def second_title(document, temp, definitions, first_title, index1, root):
                             paragraph.add_run(u'无')
 
                         paragraph = document.add_paragraph(u'响应参数：')
-                        responses(definitions, method_info['responses'],
-                                  document, paragraph)
+                responses(definitions, method_info['responses'],
+                          document, paragraph)
+
+# 响应参数
 
 
 def responses(definitions, responses, document, paragraph):
-    table = document.add_table(
-        rows=1, cols=5)
     for status, res_info in responses.items():
         if status == '200':
+            table = document.add_table(rows=1, cols=5)
             if '$ref' in res_info['schema']:
                 ref = res_info['schema']['$ref'].replace(
                     '#/definitions/', '').capitalize()
@@ -196,14 +197,15 @@ def responses(definitions, responses, document, paragraph):
                         table = document.add_table(
                             rows=1, cols=5)
                         prop_to_row(table, properties, '')
+                    print(200)
             elif 'type' in res_info['schema']:
-                print(res_info['schema'])
+                print(202, res_info['schema'])
                 if 'additionalProperties' in res_info['schema']:
                     prop = {}
                     prop['additionalProperties'] = res_info['schema']['additionalProperties']
                     prop_to_row(table, prop, '')
                 elif 'items' in res_info['schema']:
-                    print(res_info['schema'])
+                    print(208, res_info['schema'])
                     ref = res_info['schema']['items']['$ref'].replace(
                         '#/definitions/', '').capitalize()
                     for key, prop in definitions.items():
@@ -212,6 +214,8 @@ def responses(definitions, responses, document, paragraph):
                             table = document.add_table(
                                 rows=1, cols=5)
                             prop_to_row(table, properties, '')
+                        else:
+                            print('217')
                 else:
                     prop = {}
                     prop['response'] = res_info['schema']
@@ -221,8 +225,7 @@ def responses(definitions, responses, document, paragraph):
                 pass
 
         else:
-            paragraph.add_run(u'未完成')
-            paragraph.add_run('\n')
+            paragraph.add_run(u'无')
 
 
 def prop_to_row(table, properties, pos):
